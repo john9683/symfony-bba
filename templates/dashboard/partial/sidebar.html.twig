@@ -1,0 +1,30 @@
+<div class="bg-light border-right" id="sidebar-wrapper">
+    <div class="sidebar-heading">BlaBlaArticle</div>
+    <div class="list-group list-group-flush">
+
+        <a href="{{ path('app_dashboard_account') }}" class="list-group-item list-group-item-action
+            {% if setHtmlClassActive is defined and setHtmlClassActive is same as ('account') %} active {% else %} bg-light {% endif %}
+        ">Рабочий стол</a>
+
+        <a href="{{ path('app_dashboard_create') }}" class="list-group-item list-group-item-action
+            {% if setHtmlClassActive is defined and setHtmlClassActive is same as ('create') %} active {% else %} bg-light {% endif %}
+        ">Создать статью</a>
+
+        <a href="{{ path('app_dashboard_articles') }}" class="list-group-item list-group-item-action
+            {% if setHtmlClassActive is defined and setHtmlClassActive is same as ('articles') %} active {% else %} bg-light {% endif %}
+        ">История статей</a>
+
+        <a href="{{ path('app_dashboard_subscription') }}" class="list-group-item list-group-item-action
+            {% if setHtmlClassActive is defined and setHtmlClassActive is same as ('subscription') %} active {% else %} bg-light {% endif %}
+        ">Подписка</a>
+
+        <a href="{{ path('app_dashboard_profile') }}" class="list-group-item list-group-item-action
+            {% if setHtmlClassActive is defined and setHtmlClassActive is same as ('profile') %} active {% else %} bg-light {% endif %}
+        ">Профиль</a>
+
+        <a href="{{ path('app_dashboard_modules') }}" class="list-group-item list-group-item-action
+            {% if setHtmlClassActive is defined and setHtmlClassActive is same as ('modules') %} active {% else %} bg-light {% endif %}
+        ">Модули генератора</a>
+
+    </div>
+</div>

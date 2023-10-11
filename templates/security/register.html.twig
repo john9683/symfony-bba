@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <body class="signin-body">
+
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+                    <div class="card card-signin my-5">
+                        <div class="card-body">
+
+                            {% for flash in app.flashes('error_email_verified') %}
+                                <div class="alert alert-danger text-center">{{ flash }}</div>
+                            {% endfor %}
+
+                            <h5 class="card-title text-center">Регистрация</h5>
+
+                                {{ form_start(registrationForm, {
+                                    attr: { class: 'form-signin' }
+                                }) }}
+
+                            {{ form_errors(registrationForm.email) }}
+                            <div class="form-label-group">
+                                <input
+                                        name="{{ field_name(registrationForm.email) }}"
+                                        value="{{ field_value(registrationForm.email) }}"
+                                        id="inputEmail"
+                                        class="form-control"
+                                        placeholder="Email">
+                                <label for="inputEmail">Email</label>
+                            </div>
+
+                            {{ form_errors(registrationForm.firstName) }}
+                            <div class="form-label-group">
+                                <input
+                                        name="{{ field_name(registrationForm.firstName) }}"
+                                        value="{{ field_value(registrationForm.firstName) }}"
+                                        id="inputName"
+                                        class="form-control"
+                                        type="text"
+                                        placeholder="Ваше имя">
+                                <label for="inputName">Ваше имя</label>
+                            </div>
+
+                            {{ form_errors(registrationForm.plainPassword) }}
+                            <div class="form-label-group">
+                                <input
+                                        name="{{ field_name(registrationForm.plainPassword) }}"
+                                        id="inputPassword"
+                                        class="form-control"
+                                        type="password"
+                                        placeholder="Пароль">
+                                <label for="inputPassword">Пароль</label>
+                            </div>
+
+                            {{ form_errors(registrationForm.confirmPassword) }}
+                            <div class="form-label-group">
+                                <input
+                                        name="{{ field_name(registrationForm.confirmPassword) }}"
+                                        id="inputConfirmPassword"
+                                        class="form-control"
+                                        type="password"
+                                        placeholder="Подтверждение пароля">
+                                <label for="inputConfirmPassword">Подтверждение пароля</label>
+                            </div>
+
+                            <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Регистрация</button>
+                            <hr class="my-4">
+                            <div class="text-center"><a href="{{ path('app_login') }}">Я уже зарегистрирован</a></div>
+
+                            {{ form_end(registrationForm) }}
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </body>
+
+{% endblock %}

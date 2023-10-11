@@ -1,0 +1,83 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<div class="d-flex" id="wrapper">
+
+    {% include 'dashboard/partial/sidebar.html.twig' %}
+
+    <div id="page-content-wrapper">
+
+        {% include 'dashboard/partial/navbar.html.twig' %}
+
+        <div class="container-fluid">
+            <h1 class="mt-4">Подписка</h1>
+            <div class="row">
+
+                <div class="col-xl-8">
+                    <div class="alert alert-success" role="alert">
+                        Подписка {{ userSubscription.description['title'] }} оформлена
+                        {% if userSubscription.description['isDefault'] is same as (false) %}
+                            до {{dateEndSubscription|date("d.m.Y") }}
+                        {% endif %}
+                    </div>
+
+                    <section class="pricing py-2 row">
+                        <div class="container">
+                            <div class="row">
+
+                                {% for subscription in subscriptionsArray %}
+
+                                <div class="col-lg-4">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            {% if subscription.level is same as userSubscription.level %}
+                                                <h5 class="card-title text-uppercase text-center current text-warning"><i class="fas fa-check"></i>{{ subscription.description['title'] }}</h5>
+                                            {%  else %}
+                                                 <h5 class="card-title text-muted text-uppercase text-center">{{ subscription.description['title'] }}</h5>
+                                            {% endif %}
+                                            <h6 class="card-price text-center">${{ subscription.description['price'] }}<span class="period">/{{ subscription.description['periodForPrice'] }}</span></h6>
+                                            <hr>
+                                            <ul class="fa-ul">
+                                                {% for advantage in subscription.description['advantages'] %}
+                                                    <li {{ advantage['access'] ?? 'class="text-muted"' }} >
+                                                        <span class="fa-li">
+                                                            <i class="fas fa-{{  advantage['access'] ? 'check' : 'times' }}"></i>
+                                                        </span>
+                                                            {{ advantage['strong'] ? '<strong>' }}
+                                                            {{ advantage['feature'] }}
+                                                            {{ advantage['strong'] ? '</strong>' }}
+                                                    </li>
+
+                                                {% endfor %}
+                                            </ul>
+                                            {% if subscription.level is same as userSubscription.level %}
+                                                <a href="#" class="btn btn-block btn-secondary text-uppercase" disabled>Текущий уровень</a>
+                                            {%  elseif subscription.level > userSubscription.level %}
+                                                {{ form_start(userSubscriptionForm) }}
+                                                <input type="hidden" name="{{ field_name(userSubscriptionForm.code) }}" value="{{ subscription.code }}">
+                                                <button class="btn btn-block btn-primary text-uppercase">Оформить</button>
+                                                {{ form_end(userSubscriptionForm) }}
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {% endfor %}
+
+                            </div>
+
+                        </div>
+                    </section>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
+
+

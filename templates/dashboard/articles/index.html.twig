@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<div class="d-flex" id="wrapper">
+
+    {% include 'dashboard/partial/sidebar.html.twig' %}
+
+    <div id="page-content-wrapper">
+
+        {% include 'dashboard/partial/navbar.html.twig' %}
+
+        <div class="container-fluid">
+            <h1 class="mt-4">История статей</h1>
+            <div class="row">
+
+                <div class="col-xl-8">
+
+                    <table class="table table-hover table-bordered">
+                        <thead class="thead-light">
+                        <tr>
+                            <th class="text-center" scope="col">id</th>
+                            <th class="text-center" scope="col">Название</th>
+                            <th class="text-center" scope="col">Описание</th>
+                            <th class="text-center" scope="col">Создана</th>
+                            <th class="text-center" scope="col">Просмотр</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        {% for article in pagination %}
+
+                            <tr>
+                                <td class="text-center"> {{ article.id }}</td>
+                                <td>{{ article.title }}</td>
+                                <td>{{ article.body|stripTitle|striptags|u.truncate(150, '...') }}</td>
+                                <td>{{ article.createdAt|date("Y.m.d") }}</td>
+                                <td class="text-center"><a href="{{ path('app_dashboard_show', {id: article.id}) }}"><i class="fas fa-eye"></i></a> </td>
+                            </tr>
+
+                        {% else %}
+                            <tr>
+                                <td colspan="4">А тут ничего нет :-(</td>
+                            </tr>
+                        {% endfor %}
+
+                        </tbody>
+                    </table>
+
+                    {{ knp_pagination_render(pagination) }}
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

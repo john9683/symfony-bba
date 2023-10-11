@@ -1,0 +1,11 @@
+.dashboard {
+  .card {
+    transition: all 0.2s;
+    box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);
+    @media (min-width: 992px) {
+        &:hover {
+          box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.3);
+        }
+    }
+  }
+}

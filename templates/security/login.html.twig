@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<body class="signin-body">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+                <div class="card card-signin my-5">
+                    <div class="card-body">
+
+                        {% for flash in app.flashes('success_email_verified') %}
+                            <div class="alert alert-success text-center">{{ flash }}</div>
+                        {% endfor %}
+
+                        {% for flash in app.flashes('error_email_verified') %}
+                            <div class="alert alert-danger text-center">{{ flash }}</div>
+                        {% endfor %}
+
+                        <h5 class="card-title text-center">Авторизация</h5>
+
+                        {% if error %}
+                            <div class="alert alert-danger" role="alert">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                        {% endif %}
+
+                        {% if app.user %}
+                            <div class="alert alert-danger" role="alert">
+                                You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Выйти</a>
+                            </div>
+                        {% endif %}
+
+                        <form class="form-signin" method="post">
+
+                            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+                            <div class="form-label-group">
+                                <input type="email" id="inputEmail" class="form-control" placeholder="Ваш Email"  value="{{ last_username }}" name="email" autocomplete="email" autofocus>
+                                <label for="inputEmail">Ваш Email</label>
+                            </div>
+
+                            <div class="form-label-group">
+                                <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Пароль" autocomplete="current-password" required>
+                                <label for="inputPassword">Пароль</label>
+                            </div>
+
+                            <div class="custom-control custom-checkbox mb-3">
+                                <input type="checkbox" class="custom-control-input" id="customCheckRememberMe" name="_remember_me">
+                                <label class="custom-control-label" for="customCheckRememberMe">Запомнить меня</label>
+                            </div>
+
+                            <button class="btn btn-lg btn-primary btn-block text-uppercase" id="btnLogin" type="submit">Войти</button>
+                            <hr class="my-4">
+                            <div class="text-center"><a href="{{ path('app_register') }}">Регистрация</a></div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+{% endblock %}
+

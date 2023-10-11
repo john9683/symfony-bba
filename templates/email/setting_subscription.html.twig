@@ -1,0 +1,18 @@
+{% extends 'email/email_base.html.twig' %}
+{% block content %}
+    <p>Дорогой <b>{{ email.toName|capitalize }}</b>, тебе установлена подписка на BlaBlaArticle.</p>
+    <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">
+        <tbody>
+        <tr>
+            <td align="left">
+                <p>Ваша новая подписка - <b>{{ subscriptionTitle }}</b>.</p>
+                {% if type is same as ('default') %}
+                    <p>Основание установки подписки: первичная регистрация или окончание скрока действия платной подписки</p>
+                {% elseif type is same as ('buy') %}
+                    <p>Основание установки подписки: покупка платной подписки</p>
+                {% endif %}
+            </td>
+        </tr>
+        </tbody>
+    </table>
+{% endblock %}

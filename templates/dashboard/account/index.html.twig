@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<div class="d-flex" id="wrapper">
+
+    {% include 'dashboard/partial/sidebar.html.twig' %}
+
+    <div id="page-content-wrapper">
+
+        {% include 'dashboard/partial/navbar.html.twig' %}
+
+        <div class="container-fluid">
+            <h1 class="mt-4">Рабочий стол</h1>
+            <div class="row">
+                <div class="col-xl-8 border-right">
+                    {% if getSubscriptionWarning is same as (true) %}
+                        <div class="alert alert-warning" role="alert">
+                            Подписка истекает через {{ dayCount }} дня
+                        </div>
+                    {% endif %}
+                    <div class="card-columns dashboard">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    {% if articlesLastMonth is defined %}
+                                        {{  allArticlesCount }}
+                                    {% else %}
+                                        0
+                                    {% endif %}
+                                </h5>
+                                <p class="card-text">Всего статей создано.</p>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    {% if articlesLastMonth is defined %}
+                                        {{ articlesLastMonth }}
+                                    {% else %}
+                                        0
+                                    {% endif %}
+                                </h5>
+                                <p class="card-text">Создано в этом месяце.</p>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ userSubscription.description['title'] }}</h5>
+                                <p class="card-text">Ваш уровень подписки.</p>
+                                {%  if userSubscription.level < highestLevelSubscription %}
+                                    <a href="{{ path('app_dashboard_subscription') }}" class="btn btn-primary">Улучшить</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Создать статью</h5>
+                                <a href="{{ path('app_dashboard_create') }}" class="btn btn-primary">Создать</a>
+                            </div>
+                        </div>
+
+                        {% if lastArticleObject.title is defined %}
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{lastArticleObject.title}}</h5>
+                                    <p class="card-text">{{lastArticleObject.body|stripTitle|striptags|u.truncate(200, '...')}}</p>
+                                    <a href="{{ path('app_dashboard_show', {id: lastArticleObject.id}) }}" class="btn btn-primary">Подробнее</a>
+                                </div>
+                            </div>
+                        {% endif %}
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

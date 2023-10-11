@@ -1,0 +1,120 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<div class="d-flex" id="wrapper">
+
+    {% include 'dashboard/partial/sidebar.html.twig' %}
+
+    <div id="page-content-wrapper">
+
+        {% include 'dashboard/partial/navbar.html.twig' %}
+
+
+        <div class="container-fluid">
+            <section>
+
+                <h1 class="mt-4">Ваши модули</h1>
+
+                {% if access is same as (false) %}
+                    <div class="alert alert-danger" role="alert">
+                        Ваша подписка не содержит данной опции, чтобы получить эту опцию <a href="{{ path('app_dashboard_subscription') }}">улучшите подписку</a>
+                    </div>
+                {% endif %}
+
+                {% for flash in app.flashes('module_delete') %}
+                    <div class="alert alert-danger text-center">{{ flash }}</div>
+                {% endfor %}
+
+                {% for flash in app.flashes('module_create') %}
+                    <div class="alert alert-success text-center">{{ flash }}</div>
+                {% endfor %}
+
+                <table class="table table-hover table-bordered">
+
+                    <thead class="thead-light">
+                    <tr>
+                        <th class="text-center" scope="col">#</th>
+                        <th class="text-center" scope="col">Модуль</th>
+                        <th class="text-center" scope="col">Контент</th>
+                        <th class="text-center" scope="col">Удалить</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+
+                    {% for module in pagination %}
+                        <tr>
+                            <td class="text-center">{{ module.number }}</td>
+                            <td>{{ module.title }}</td>
+                            <td>{{ module.layout }}</td>
+                            <td class="text-center">
+                                {% if access is same as (true) %}
+                                    <a href="{{ path('app_dashboard_module_delete', {id: module.id}) }}"><i class="fas fa-trash text-danger"></i></a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="4">А тут ничего нет :-(</td>
+                        </tr>
+                    {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+                {{ knp_pagination_render(pagination) }}
+
+            </section>
+
+            <hr>
+
+            <section class="py-4">
+
+                <h1 class="mt-4">Добавить модуль</h1>
+
+                <div class="row">
+
+                    <div class="col-xl-6">
+
+                        {{ form_start(moduleForm) }}
+
+                            {{ form_errors(moduleForm.title) }}
+                            <div class="form-group">
+                                <label for="articleTitle">Название модуля</label>
+                                <input
+                                        type="text"
+                                        id="articleTitle"
+                                        class="form-control"
+                                        placeholder="Название модуля"
+                                        name="{{ field_name(moduleForm.title) }}" autofocus>
+                            </div>
+
+                            {{ form_errors(moduleForm.layout) }}
+                            <div class="form-group">
+                                <label for="articleWord">Код модуля</label>
+                                <textarea
+                                        id="articleWord"
+                                        class="form-control"
+                                        name="{{ field_name(moduleForm.layout) }}">
+                                </textarea>
+                            </div>
+
+                            <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit"
+                                {% if access is same as (false) %}
+                                    disabled
+                                {% endif %}
+                            >Добавить</button>
+
+                        {{ form_end(moduleForm) }}
+
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

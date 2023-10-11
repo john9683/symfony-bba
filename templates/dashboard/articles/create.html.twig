@@ -1,0 +1,253 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<div class="d-flex" id="wrapper">
+
+    {% include 'dashboard/partial/sidebar.html.twig' %}
+
+    <div id="page-content-wrapper">
+
+        {% include 'dashboard/partial/navbar.html.twig' %}
+
+        <div class="container-fluid">
+            <h1 class="mt-4">{{ formTitle}}</h1>
+            <div class="row mb-5">
+
+                <div class="col-xl-6">
+                    {% if limitArticlesPerHour is same as (false) %}
+                        <div class="alert alert-danger" role="alert">
+                            Превышен лимит создания статей, чтобы снять лимит <a href="{{ path('app_dashboard_subscription') }}">Улучшите подписку</a>
+                        </div>
+                    {% endif %}
+
+                    {% for flash in app.flashes('article_create') %}
+                        <div class="alert alert-success text-center">{{ flash }}</div>
+                    {% endfor %}
+
+                    {% for flash in app.flashes('article_edit') %}
+                        <div class="alert alert-success text-center">{{ flash }}</div>
+                    {% endfor %}
+
+                        {{ form_start(createForm) }}
+
+                        <div class="form-group">
+                            <label for="fieldTheme">Тематика</label>
+                            <select class="form-control" id="fieldTheme" name="{{ field_name(createForm.theme) }}">
+                                {% for theme in themesArray %}
+                                    <option
+                                         value="{{ theme }}"
+                                        {% if articleObject.theme is defined and theme is same as articleObject.theme %}
+                                           selected
+                                        {% endif %}
+                                    >
+                                        Статья про {{ theme|capitalize }}
+                                    </option>
+                                {%  endfor %}
+                            </select>
+                        </div>
+                        <div class="form-label-group">
+                            <input type="text" id="articleTitle" class="form-control" placeholder="Заголовок статьи" autofocus
+                                name="{{ field_name(createForm.title) }}"
+                                {% if articleObject.title is defined %}value="{{ articleObject.title }}"{% endif %}
+                             >
+                            <label for="articleTitle">Заголовок статьи</label>
+                        </div>
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <p class="card-title">Ключевое слово</p>
+                                <div class="form-label-group">
+                                    <input type="text" id="article0Word" class="form-control" placeholder="Ключевое слово"
+                                        name="{{ field_name(createForm.keyword0) }}"
+                                        {% if articleObject.keyword[0] is defined %}value="{{ articleObject.keyword[0] }}"{% else %}value="EXAMPLE"{% endif %}
+                                    >
+                                    <label for="article0Word">Именительный падеж</label>
+                                </div>
+                                <div class="form-label-group">
+                                    <input type="text" id="article1Word" class="form-control" placeholder="Родительный падеж"
+                                        name="{{ field_name(createForm.keyword1) }}"
+                                        {% if articleObject.keyword[1] is defined %}value="{{ articleObject.keyword[1] }}"{% else %}value="EXAMPLE"{% endif %}
+                                    >
+                                    <label for="article1Word">Родительный падеж</label>
+                                </div>
+                                <div class="form-label-group">
+                                    <input type="text" id="article1Word" class="form-control" placeholder="Родительный падеж"
+                                        name="{{ field_name(createForm.keyword2) }}"
+                                        {% if articleObject.keyword[2] is defined %}value="{{ articleObject.keyword[2] }}"{% else %}value="EXAMPLE"{% endif %}
+                                    >
+                                    <label for="article2Word">Дательный падеж</label>
+                                </div>
+                                <div class="form-label-group">
+                                    <input type="text" id="article1Word" class="form-control" placeholder="Родительный падеж"
+                                        name="{{ field_name(createForm.keyword3) }}"
+                                        {% if articleObject.keyword[3] is defined %}value="{{ articleObject.keyword[3] }}"{% else %}value="EXAMPLE"{% endif %}
+                                    >
+                                    <label for="article3Word">Винительный падеж</label>
+                                </div>
+                                <div class="form-label-group">
+                                    <input type="text" id="article1Word" class="form-control" placeholder="Родительный падеж"
+                                        name="{{ field_name(createForm.keyword4) }}"
+                                        {% if articleObject.keyword[4] is defined %}value="{{ articleObject.keyword[4] }}"{% else %}value="EXAMPLE"{% endif %}
+                                    >
+                                    <label for="article4Word">Творительный падеж</label>
+                                </div>
+                                <div class="form-label-group">
+                                    <input type="text" id="article1Word" class="form-control" placeholder="Родительный падеж"
+                                        name="{{ field_name(createForm.keyword5) }}"
+                                        {% if articleObject.keyword[5] is defined %}value="{{ articleObject.keyword[5] }}"{% else %}value="EXAMPLE"{% endif %}
+                                    >
+                                    <label for="article5Word">Предложный падеж</label>
+                                </div>
+                                <div class="form-label-group">
+                                    <input type="text" id="article2Word" class="form-control" placeholder="Множественное число"
+                                        name="{{ field_name(createForm.keyword6) }}"
+                                        {% if articleObject.keyword[6] is defined %}value="{{ articleObject.keyword[6] }}"{% else %}value="EXAMPLES"{% endif %}
+                                    >
+                                    <label for="article6Word">Множественное число</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-label-group">
+                                    <input type="text" id="sizeFromField" class="form-control" placeholder="Размер статьи"
+                                        name="{{ field_name(createForm.sizeMin) }}"
+                                        {% if articleObject.size[0] is defined %}value="{{ articleObject.size[0] }}"{% endif %}
+                                    >
+                                    <label for="sizeFromField">Размер статьи от</label>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-label-group">
+                                    <input type="text" id="sizeToField" class="form-control" placeholder="До"
+                                        name="{{ field_name(createForm.sizeMax) }}"
+                                       {% if articleObject.size[1] is defined %}value="{{ articleObject.size[1] }}"{% endif %}
+                                    >
+                                    <label for="sizeToField">До</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <p class="card-title">Продвигаемые слова</p>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-label-group">
+                                            <input type="text" id="word0Field" class="form-control" placeholder="Продвигаемое слово"
+                                                name="{{ field_name(createForm.words0) }}"
+                                                {% if articleObject.words[0]['word'] is defined %}value="{{ articleObject.words[0]['word'] }}"{% endif %}
+                                            >
+                                            <label for="word0Field">Продвигаемое слово</label>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-label-group">
+                                            <input type="text" id="word0CountField" class="form-control" placeholder="кол-во"
+                                                   name="{{ field_name(createForm.countWords0) }}"
+                                                   {% if articleObject.words[0]['count'] is defined %}value="{{ articleObject.words[0]['count'] }}"{% endif %}
+                                            >
+                                            <label for="word0CountField">кол-во</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-label-group">
+                                            <input type="text" id="word1Field" class="form-control" placeholder="Продвигаемое слово"
+                                                   name="{{ field_name(createForm.words1) }}"
+                                                   {% if articleObject.words[1]['word'] is defined %}value="{{ articleObject.words[1]['word'] }}"{% endif %}
+                                            >
+                                            <label for="word1Field">Продвигаемое слово</label>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-label-group">
+                                            <input type="text" id="word1CountField" class="form-control" placeholder="кол-во"
+                                                   name="{{ field_name(createForm.countWords1) }}"
+                                                   {% if articleObject.words[1]['count'] is defined %}value="{{ articleObject.words[1]['count'] }}"{% endif %}
+                                            >
+                                            <label for="word1CountField">кол-во</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-label-group">
+                                            <input type="text" id="word2Field" class="form-control" placeholder="Продвигаемое слово"
+                                                   name="{{ field_name(createForm.words2) }}"
+                                                   {% if articleObject.words[2]['word'] is defined %}value="{{ articleObject.words[2]['word'] }}"{% endif %}
+                                            >
+                                            <label for="word2Field">Продвигаемое слово</label>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-label-group">
+                                            <input type="text" id="word2CountField" class="form-control" placeholder="кол-во"
+                                                   name="{{ field_name(createForm.countWords2) }}"
+                                                   {% if articleObject.words[2]['count'] is defined %}value="{{ articleObject.words[2]['count'] }}"{% endif %}
+                                            >
+                                            <label for="word2CountField">кол-во</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleFormControlFile1">Изображения (количество изображений ограничено вашей подпиской: {{ imagesLimit }} штук)</label>
+                            <input id="exampleFormControlFile1" class="form-control-file"
+                                   type="file" multiple
+                                   name="{{ field_name(createForm.images) }}"
+                                    {% if imagesLimit is same as (0) %}
+                                        disabled
+                                    {% endif %}
+                            >
+                        </div>
+
+                            {% if imagesExists is same as (true) %}
+                                <div class="mb-2">
+                                    <h4>К статье загружены изображения</h4>
+                                    {% for image in imagesArray %}
+                                        <img class="mb-2 m-2" src="{{ image | imagine_filter('article_preview') }}" alt="">
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+
+                        <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit"
+                            {% if limitArticlesPerHour is same as (false) %}
+                                disabled
+                            {% endif %}
+                        >{{buttonText}}</button>
+
+                        {{ form_end(createForm) }}
+
+                </div>
+            </div>
+
+            {% if articleExists is same as (true) %}
+
+            <hr>
+
+            <h2 class="mt-4">Ваша статья</h2>
+
+            <hr>
+
+            <div class="row">
+
+                <div class="col-xl-6">
+
+                    {{ articleLayout|raw }}
+            {% endif %}
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

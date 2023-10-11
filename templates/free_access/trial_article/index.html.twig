@@ -1,0 +1,79 @@
+{% extends 'free_access/body.html.twig' %}
+
+{% block body_content %}
+
+<section>
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+
+                <h2 class="card-title text-center mb-4">Создание статьи</h2>
+
+                {% if checkTrialArticleId is same as (true) %}
+                        <div class="alert alert-danger text-center" role="alert">
+                            Демонстрационная форма больше не доступна! Чтобы создать новую статью <a href="{{ path('app_register') }}">зарегистрируйтесь</a>
+                        </div>
+                    {% else %}
+                        <div class="alert alert-info text-center" role="alert">
+                            Чтобы создать статью по настоящему <a href="{{ path('app_register') }}">зарегистрируйтесь</a>
+                        </div>
+                {% endif %}
+
+                <form class="form-signin">
+                    <div class="form-label-group">
+                        <input type="text" id="articleTitle" class="form-control" placeholder="Заголовок статьи" autofocus name="trial_title"
+                                {% if checkTrialArticleId is same as (true) %} disabled {%  endif %}
+                        >
+                        <label for="articleTitle">Заголовок статьи</label>
+                    </div>
+                    <div class="form-label-group">
+                        <input type="text" id="articleWord" class="form-control" placeholder="Продвигаемое слово" name="trial_keyword"
+                                {% if checkTrialArticleId is same as (true) %} disabled {%  endif %}
+                        >
+                        <label for="articleWord">Продвигаемое слово</label>
+                    </div>
+
+                    <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit"
+                            {% if checkTrialArticleId is same as (true) %} disabled {%  endif %}
+                    >Попробовать</button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<hr>
+
+<section>
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-lg-12 mx-auto">
+
+                {{ article|raw }}
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="call-to-action text-white text-center">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-9 mx-auto">
+                <h2 class="mb-4">Готовы начать? Регистрируйтесь прямо сейчас!</h2>
+            </div>
+            <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
+                <div class="form-row">
+                    <div class="col-12 col-md-6 mx-auto">
+                        <a href="{{ path('app_register') }}" class="btn btn-block btn-lg btn-primary">Регистрация</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

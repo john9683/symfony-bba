@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="d-flex" id="wrapper">
+
+        {% include 'dashboard/partial/sidebar.html.twig' %}
+
+        <div id="page-content-wrapper">
+
+            {% include 'dashboard/partial/navbar.html.twig' %}
+
+            <div style="margin-top:200px; font-size: 30px" class="font-weight-bold text-warning text-center">
+                Ой... а такой страницы либо не существует, либо у вас нет к ней доступа :-(
+            </div>
+
+        </div>
+
+    </div>
+
+{% endblock %}

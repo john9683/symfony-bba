@@ -1,0 +1,4 @@
+demontpx_parsedown:
+  breaks_enabled: false
+  #  markup_escaped:       false
+  #  urls_linked:          true_parsedown:

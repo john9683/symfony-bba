@@ -1,0 +1,3 @@
+"Invalid credentials.": "Неверный пароль"
+"LoginFormAuthenticator->!$user": "Неверный логин"
+"LoginFormAuthenticator->isVerified": "Email не подтверждён"
